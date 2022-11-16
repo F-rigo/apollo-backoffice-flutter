@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditShowPageWidget extends StatefulWidget {
@@ -34,6 +35,17 @@ class _EditShowPageWidgetState extends State<EditShowPageWidget> {
   @override
   void initState() {
     super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() => FFAppState().currentGenreTagsLabels = (getJsonField(
+            widget.item,
+            r'''$.genreTags''',
+          ) as List)
+              .map<String>((s) => s.toString())
+              .toList()
+              .toList());
+    });
+
     textController = TextEditingController(
         text: getJsonField(
       widget.item,
@@ -624,8 +636,16 @@ class _EditShowPageWidgetState extends State<EditShowPageWidget> {
                                                             ),
                                                             Container(
                                                               width: 200,
+                                                              decoration:
+                                                                  BoxDecoration(),
+                                                            ),
+                                                            Container(
+                                                              width: 200,
                                                               child:
                                                                   FlutterFlowCheckboxGroup(
+                                                                initiallySelected:
+                                                                    FFAppState()
+                                                                        .currentGenreTagsLabels,
                                                                 options: [
                                                                   'Crime or Mystery',
                                                                   'Classics',

@@ -827,23 +827,6 @@ class _NewShowPageWidgetState extends State<NewShowPageWidget> {
                                       ))
                                         FFButtonWidget(
                                           onPressed: () async {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('ok'),
-                                                  content: Text('ok'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
                                             setState(() => FFAppState()
                                                 .shows
                                                 .add(getJsonField(
@@ -871,6 +854,23 @@ class _NewShowPageWidgetState extends State<NewShowPageWidget> {
                                                           .toList()),
                                                   r'''$''',
                                                 )));
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text('ok'),
+                                                  content: Text('ok'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
                                           },
                                           text: 'Save ',
                                           options: FFButtonOptions(

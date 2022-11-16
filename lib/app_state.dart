@@ -30,6 +30,8 @@ class FFAppState {
   List<String> tagAdditional = [];
 
   List<dynamic> shows = [];
+
+  List<String> currentGenreTagsLabels = [];
 }
 
 LatLng? _latLngFromString(String? val) {
