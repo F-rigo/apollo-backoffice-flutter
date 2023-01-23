@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -60,4 +61,15 @@ dynamic searchShowById(
   return items.singleWhere(
     (element) => element['id'] == id,
   );
+}
+
+String intToString(int value) {
+  return value.toString();
+}
+
+String? plusCounter(int? value) {
+  // function to increase a value
+  if (value == null) return null;
+  // increment counter by one
+  return (value + 1).toString();
 }

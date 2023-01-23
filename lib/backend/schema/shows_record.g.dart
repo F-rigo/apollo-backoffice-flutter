@@ -54,12 +54,6 @@ class _$ShowsRecordSerializer implements StructuredSerializer<ShowsRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.superFeatureOrder;
-    if (value != null) {
-      result
-        ..add('superFeatureOrder')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.status;
     if (value != null) {
       result
@@ -119,6 +113,13 @@ class _$ShowsRecordSerializer implements StructuredSerializer<ShowsRecord> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
+    value = object.superFeatureOrder;
+    if (value != null) {
+      result
+        ..add('superFeatureOrder')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -161,10 +162,6 @@ class _$ShowsRecordSerializer implements StructuredSerializer<ShowsRecord> {
           result.isSuperfeatured = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
-        case 'superFeatureOrder':
-          result.superFeatureOrder = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'status':
           result.status = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -205,6 +202,10 @@ class _$ShowsRecordSerializer implements StructuredSerializer<ShowsRecord> {
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
+        case 'superFeatureOrder':
+          result.superFeatureOrder = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -230,8 +231,6 @@ class _$ShowsRecord extends ShowsRecord {
   @override
   final bool? isSuperfeatured;
   @override
-  final int? superFeatureOrder;
-  @override
   final String? status;
   @override
   final String? title;
@@ -248,6 +247,8 @@ class _$ShowsRecord extends ShowsRecord {
   @override
   final BuiltList<String>? contentWarningTags;
   @override
+  final String? superFeatureOrder;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ShowsRecord([void Function(ShowsRecordBuilder)? updates]) =>
@@ -259,7 +260,6 @@ class _$ShowsRecord extends ShowsRecord {
       this.isDone,
       this.isFeatured,
       this.isSuperfeatured,
-      this.superFeatureOrder,
       this.status,
       this.title,
       this.sync,
@@ -268,6 +268,7 @@ class _$ShowsRecord extends ShowsRecord {
       this.formatTags,
       this.additionalTags,
       this.contentWarningTags,
+      this.superFeatureOrder,
       this.ffRef})
       : super._();
 
@@ -287,7 +288,6 @@ class _$ShowsRecord extends ShowsRecord {
         isDone == other.isDone &&
         isFeatured == other.isFeatured &&
         isSuperfeatured == other.isSuperfeatured &&
-        superFeatureOrder == other.superFeatureOrder &&
         status == other.status &&
         title == other.title &&
         sync == other.sync &&
@@ -296,6 +296,7 @@ class _$ShowsRecord extends ShowsRecord {
         formatTags == other.formatTags &&
         additionalTags == other.additionalTags &&
         contentWarningTags == other.contentWarningTags &&
+        superFeatureOrder == other.superFeatureOrder &&
         ffRef == other.ffRef;
   }
 
@@ -322,15 +323,15 @@ class _$ShowsRecord extends ShowsRecord {
                                                         isDone.hashCode),
                                                     isFeatured.hashCode),
                                                 isSuperfeatured.hashCode),
-                                            superFeatureOrder.hashCode),
-                                        status.hashCode),
-                                    title.hashCode),
-                                sync.hashCode),
-                            id.hashCode),
-                        genreTags.hashCode),
-                    formatTags.hashCode),
-                additionalTags.hashCode),
-            contentWarningTags.hashCode),
+                                            status.hashCode),
+                                        title.hashCode),
+                                    sync.hashCode),
+                                id.hashCode),
+                            genreTags.hashCode),
+                        formatTags.hashCode),
+                    additionalTags.hashCode),
+                contentWarningTags.hashCode),
+            superFeatureOrder.hashCode),
         ffRef.hashCode));
   }
 
@@ -342,7 +343,6 @@ class _$ShowsRecord extends ShowsRecord {
           ..add('isDone', isDone)
           ..add('isFeatured', isFeatured)
           ..add('isSuperfeatured', isSuperfeatured)
-          ..add('superFeatureOrder', superFeatureOrder)
           ..add('status', status)
           ..add('title', title)
           ..add('sync', sync)
@@ -351,6 +351,7 @@ class _$ShowsRecord extends ShowsRecord {
           ..add('formatTags', formatTags)
           ..add('additionalTags', additionalTags)
           ..add('contentWarningTags', contentWarningTags)
+          ..add('superFeatureOrder', superFeatureOrder)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -379,11 +380,6 @@ class ShowsRecordBuilder implements Builder<ShowsRecord, ShowsRecordBuilder> {
   bool? get isSuperfeatured => _$this._isSuperfeatured;
   set isSuperfeatured(bool? isSuperfeatured) =>
       _$this._isSuperfeatured = isSuperfeatured;
-
-  int? _superFeatureOrder;
-  int? get superFeatureOrder => _$this._superFeatureOrder;
-  set superFeatureOrder(int? superFeatureOrder) =>
-      _$this._superFeatureOrder = superFeatureOrder;
 
   String? _status;
   String? get status => _$this._status;
@@ -425,6 +421,11 @@ class ShowsRecordBuilder implements Builder<ShowsRecord, ShowsRecordBuilder> {
   set contentWarningTags(ListBuilder<String>? contentWarningTags) =>
       _$this._contentWarningTags = contentWarningTags;
 
+  String? _superFeatureOrder;
+  String? get superFeatureOrder => _$this._superFeatureOrder;
+  set superFeatureOrder(String? superFeatureOrder) =>
+      _$this._superFeatureOrder = superFeatureOrder;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -441,7 +442,6 @@ class ShowsRecordBuilder implements Builder<ShowsRecord, ShowsRecordBuilder> {
       _isDone = $v.isDone;
       _isFeatured = $v.isFeatured;
       _isSuperfeatured = $v.isSuperfeatured;
-      _superFeatureOrder = $v.superFeatureOrder;
       _status = $v.status;
       _title = $v.title;
       _sync = $v.sync;
@@ -450,6 +450,7 @@ class ShowsRecordBuilder implements Builder<ShowsRecord, ShowsRecordBuilder> {
       _formatTags = $v.formatTags?.toBuilder();
       _additionalTags = $v.additionalTags?.toBuilder();
       _contentWarningTags = $v.contentWarningTags?.toBuilder();
+      _superFeatureOrder = $v.superFeatureOrder;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -480,7 +481,6 @@ class ShowsRecordBuilder implements Builder<ShowsRecord, ShowsRecordBuilder> {
               isDone: isDone,
               isFeatured: isFeatured,
               isSuperfeatured: isSuperfeatured,
-              superFeatureOrder: superFeatureOrder,
               status: status,
               title: title,
               sync: sync,
@@ -489,6 +489,7 @@ class ShowsRecordBuilder implements Builder<ShowsRecord, ShowsRecordBuilder> {
               formatTags: _formatTags?.build(),
               additionalTags: _additionalTags?.build(),
               contentWarningTags: _contentWarningTags?.build(),
+              superFeatureOrder: superFeatureOrder,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

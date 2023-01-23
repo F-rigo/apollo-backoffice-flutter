@@ -30,17 +30,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, _) => NewShowPageWidget(),
+      errorBuilder: (context, _) => NewHostedShowPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => NewShowPageWidget(),
+          builder: (context, _) => NewHostedShowPageWidget(),
           routes: [
             FFRoute(
-              name: 'NewShowPage',
-              path: 'newShowPage',
-              builder: (context, params) => NewShowPageWidget(),
+              name: 'NewHostedShowPage',
+              path: 'newHostedShowPage',
+              builder: (context, params) => NewHostedShowPageWidget(),
             ),
             FFRoute(
               name: 'ListShowPage',
@@ -51,8 +51,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'EditShowPage',
               path: 'editShowPage',
               builder: (context, params) => EditShowPageWidget(
-                item: params.getParam('item', ParamType.JSON),
+                id: params.getParam('id', ParamType.int),
               ),
+            ),
+            FFRoute(
+              name: 'NewRssShowPage',
+              path: 'newRssShowPage',
+              builder: (context, params) => NewRssShowPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -115,7 +120,7 @@ class FFParameters {
     String paramName,
     ParamType type, [
     bool isList = false,
-    String? collectionName,
+    List<String>? collectionNamePath,
   ]) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -129,7 +134,7 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionName);
+    return deserializeParam<T>(param, type, isList, collectionNamePath);
   }
 }
 

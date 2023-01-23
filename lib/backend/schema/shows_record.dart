@@ -20,8 +20,6 @@ abstract class ShowsRecord implements Built<ShowsRecord, ShowsRecordBuilder> {
 
   bool? get isSuperfeatured;
 
-  int? get superFeatureOrder;
-
   String? get status;
 
   String? get title;
@@ -38,6 +36,8 @@ abstract class ShowsRecord implements Built<ShowsRecord, ShowsRecordBuilder> {
 
   BuiltList<String>? get contentWarningTags;
 
+  String? get superFeatureOrder;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -48,7 +48,6 @@ abstract class ShowsRecord implements Built<ShowsRecord, ShowsRecordBuilder> {
     ..isDone = false
     ..isFeatured = false
     ..isSuperfeatured = false
-    ..superFeatureOrder = 0
     ..status = ''
     ..title = ''
     ..sync = false
@@ -56,7 +55,8 @@ abstract class ShowsRecord implements Built<ShowsRecord, ShowsRecordBuilder> {
     ..genreTags = ListBuilder()
     ..formatTags = ListBuilder()
     ..additionalTags = ListBuilder()
-    ..contentWarningTags = ListBuilder();
+    ..contentWarningTags = ListBuilder()
+    ..superFeatureOrder = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('shows');
@@ -85,11 +85,11 @@ Map<String, dynamic> createShowsRecordData({
   bool? isDone,
   bool? isFeatured,
   bool? isSuperfeatured,
-  int? superFeatureOrder,
   String? status,
   String? title,
   bool? sync,
   int? id,
+  String? superFeatureOrder,
 }) {
   final firestoreData = serializers.toFirestore(
     ShowsRecord.serializer,
@@ -100,7 +100,6 @@ Map<String, dynamic> createShowsRecordData({
         ..isDone = isDone
         ..isFeatured = isFeatured
         ..isSuperfeatured = isSuperfeatured
-        ..superFeatureOrder = superFeatureOrder
         ..status = status
         ..title = title
         ..sync = sync
@@ -108,7 +107,8 @@ Map<String, dynamic> createShowsRecordData({
         ..genreTags = null
         ..formatTags = null
         ..additionalTags = null
-        ..contentWarningTags = null,
+        ..contentWarningTags = null
+        ..superFeatureOrder = superFeatureOrder,
     ),
   );
 

@@ -24,10 +24,11 @@ abstract class FlutterFlowTheme {
       ? _prefs?.remove(kThemeModeKey)
       : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
 
-  static FlutterFlowTheme of(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.dark
-          ? DarkModeTheme()
-          : LightModeTheme();
+  static FlutterFlowTheme of(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? DarkModeTheme()
+        : LightModeTheme();
+  }
 
   late Color primaryColor;
   late Color secondaryColor;
@@ -95,51 +96,51 @@ class ThemeTypography extends Typography {
 
   final FlutterFlowTheme theme;
 
-  String get title1Family => 'Poppins';
+  String get title1Family => 'Work Sans';
   TextStyle get title1 => GoogleFonts.getFont(
-        'Poppins',
+        'Work Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 48,
+      );
+  String get title2Family => 'Work Sans';
+  TextStyle get title2 => GoogleFonts.getFont(
+        'Work Sans',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 36,
+      );
+  String get title3Family => 'Work Sans';
+  TextStyle get title3 => GoogleFonts.getFont(
+        'Work Sans',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 24,
       );
-  String get title2Family => 'Poppins';
-  TextStyle get title2 => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.w600,
-        fontSize: 22,
-      );
-  String get title3Family => 'Poppins';
-  TextStyle get title3 => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.primaryText,
-        fontWeight: FontWeight.w600,
-        fontSize: 20,
-      );
-  String get subtitle1Family => 'Poppins';
+  String get subtitle1Family => 'Work Sans';
   TextStyle get subtitle1 => GoogleFonts.getFont(
-        'Poppins',
+        'Work Sans',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 18,
       );
-  String get subtitle2Family => 'Poppins';
+  String get subtitle2Family => 'Work Sans';
   TextStyle get subtitle2 => GoogleFonts.getFont(
-        'Poppins',
+        'Work Sans',
         color: theme.secondaryText,
         fontWeight: FontWeight.w600,
         fontSize: 16,
       );
-  String get bodyText1Family => 'Poppins';
+  String get bodyText1Family => 'Work Sans';
   TextStyle get bodyText1 => GoogleFonts.getFont(
-        'Poppins',
+        'Work Sans',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 14,
       );
-  String get bodyText2Family => 'Poppins';
+  String get bodyText2Family => 'Work Sans';
   TextStyle get bodyText2 => GoogleFonts.getFont(
-        'Poppins',
+        'Work Sans',
         color: theme.secondaryText,
         fontWeight: FontWeight.w600,
         fontSize: 14,

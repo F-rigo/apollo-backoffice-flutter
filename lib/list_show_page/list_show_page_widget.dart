@@ -1,10 +1,11 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ListShowPageWidget extends StatefulWidget {
   const ListShowPageWidget({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class ListShowPageWidget extends StatefulWidget {
 
 class _ListShowPageWidgetState extends State<ListShowPageWidget> {
   TextEditingController? textController;
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -26,18 +28,21 @@ class _ListShowPageWidgetState extends State<ListShowPageWidget> {
 
   @override
   void dispose() {
+    _unfocusNode.dispose();
     textController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -94,7 +99,7 @@ class _ListShowPageWidgetState extends State<ListShowPageWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        context.pushNamed('NewShowPage');
+                                        context.pushNamed('NewHostedShowPage');
                                       },
                                       child: ListTile(
                                         title: Text(
@@ -267,55 +272,58 @@ class _ListShowPageWidgetState extends State<ListShowPageWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 12, 0, 0),
-                                  child: Builder(
-                                    builder: (context) {
-                                      final showList =
-                                          FFAppState().shows.toList();
+                                  child: StreamBuilder<List<ShowsRecord>>(
+                                    stream: queryShowsRecord(),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircularProgressIndicator(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<ShowsRecord>
+                                          listViewShowsRecordList =
+                                          snapshot.data!;
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
-                                        itemCount: showList.length,
-                                        itemBuilder: (context, showListIndex) {
-                                          final showListItem =
-                                              showList[showListIndex];
+                                        itemCount:
+                                            listViewShowsRecordList.length,
+                                        itemBuilder: (context, listViewIndex) {
+                                          final listViewShowsRecord =
+                                              listViewShowsRecordList[
+                                                  listViewIndex];
                                           return InkWell(
                                             onTap: () async {
                                               context.pushNamed(
                                                 'EditShowPage',
                                                 queryParams: {
-                                                  'item': serializeParam(
-                                                    getJsonField(
-                                                      functions.searchShowById(
-                                                          getJsonField(
-                                                            showListItem,
-                                                            r'''$.id''',
-                                                          ),
-                                                          FFAppState()
-                                                              .shows
-                                                              .toList()),
-                                                      r'''$''',
-                                                    ),
-                                                    ParamType.JSON,
+                                                  'id': serializeParam(
+                                                    listViewShowsRecord.id,
+                                                    ParamType.int,
                                                   ),
                                                 }.withoutNulls,
                                               );
                                             },
                                             child: ListTile(
                                               title: Text(
-                                                getJsonField(
-                                                  showListItem,
-                                                  r'''$.status''',
-                                                ).toString(),
+                                                listViewShowsRecord.id!
+                                                    .toString(),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .title3,
                                               ),
                                               subtitle: Text(
-                                                getJsonField(
-                                                  showListItem,
-                                                  r'''$.url''',
-                                                ).toString(),
+                                                listViewShowsRecord.url!,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle2,
